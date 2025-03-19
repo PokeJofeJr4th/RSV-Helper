@@ -1,3 +1,6 @@
+# Editor Files
+.vscode/
+
 # Data Files
 *.rsv
 
