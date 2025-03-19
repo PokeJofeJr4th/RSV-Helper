@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 
-/// @brief Read an RSV table from a file. This function reads from the whole file, not just where the head pointer is.
 struct RsvTable *rsv_read_table(FILE *file)
 {
     // the total number of rows in the file

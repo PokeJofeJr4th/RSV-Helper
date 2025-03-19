@@ -2,11 +2,6 @@
 
 #include "rsv_table.c"
 
-/// @brief Read a single field from an RSV file
-/// @param file the file to read from
-/// @param buf the buffer to read into. The buffer must have space for at least max_size + 1 bytes.
-/// @param max_size the maximum number of bytes to read
-/// @return the character describing. If this is RSV_EOF, the file has ended and there is no next field. If this is RSV_EOR, the row has ended and there is no next field. If this is RSV_NV, the field is null. If this is RSV_EOV, the field was read successfully.
 int rsv_read_field(FILE *file, char *buf, int max_size)
 {
     int c = fgetc(file);
@@ -53,9 +48,6 @@ int rsv_read_field(FILE *file, char *buf, int max_size)
     return RSV_EOV;
 }
 
-/// @brief Write a field to an RSV file
-/// @param field the string to write to the file
-/// @param file the file to write to
 int rsv_write_field(const char *field, FILE *file)
 {
     if (field == NULL)
@@ -69,8 +61,6 @@ int rsv_write_field(const char *field, FILE *file)
     return fputc(RSV_EOV, file);
 }
 
-/// @brief Mark the end of a row in an RSV file. This function should be called after EVERY row, including the last one
-/// @param file the file to write to
 int rsv_finish_row(FILE *file)
 {
     return fputc(RSV_EOR, file);
