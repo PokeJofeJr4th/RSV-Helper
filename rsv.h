@@ -39,6 +39,13 @@ int rsv_read_field(FILE *file, char *buf, int max_size);
 /// @return File I/O return code
 int rsv_write_field(const char *field, FILE *file);
 
+/// @brief Write a single formatted field to an RSV file
+/// @param file a pointer to the file to write to
+/// @param fmt a valid format specifier for the field
+/// @param args the args for formatting
+/// @return
+int rsv_fmt_field(FILE *file, const char *fmt, ...);
+
 /// @brief Mark the end of a row in an RSV file
 /// @param file a pointer to the file to write to
 /// @return File I/O return code

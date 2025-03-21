@@ -1,6 +1,7 @@
 #include "rsv.h"
 
 #include "rsv_table.c"
+#include <stdarg.h>
 
 int rsv_read_field(FILE *file, char *buf, int max_size)
 {
@@ -46,6 +47,15 @@ int rsv_read_field(FILE *file, char *buf, int max_size)
         c = fgetc(file);
     *tmp = 0;
     return RSV_EOV;
+}
+
+int rsv_fmt_field(FILE *file, const char *fmt, ...)
+{
+    va_list args;
+    va_start(args, fmt);
+    fprintf(file, fmt, args);
+    va_end(args);
+    return fputc(RSV_EOV, file);
 }
 
 int rsv_write_field(const char *field, FILE *file)
