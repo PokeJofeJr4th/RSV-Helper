@@ -53,7 +53,7 @@ int rsv_fmt_field(FILE *file, const char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
-    fprintf(file, fmt, args);
+    vfprintf(file, fmt, args);
     va_end(args);
     return fputc(RSV_EOV, file);
 }
