@@ -8,6 +8,8 @@ struct RsvTable *rsv_read_table(FILE *file)
     int num_rows = 0;
     // the total number of fields in the file
     int num_fields = 0;
+    // the total number of null fields in the file
+    int num_nulls = 0;
     rewind(file);
     for (int c = fgetc(file); c != EOF; c = fgetc(file))
     {
@@ -19,6 +21,10 @@ struct RsvTable *rsv_read_table(FILE *file)
         {
             num_fields++;
         }
+        if (c == RSV_NV)
+        {
+            num_nulls++;
+        }
     }
     // number of bytes in the file
     long file_size = ftell(file);
@@ -29,7 +35,7 @@ struct RsvTable *rsv_read_table(FILE *file)
     // number of bytes in all RsvRow structures combined
     long row_size = num_rows * sizeof(struct RsvRow *) + num_fields * sizeof(char *);
     // block large enough for all relevant data
-    char *base_ptr = malloc(table_size + row_size + file_size);
+    char *base_ptr = malloc(table_size + row_size + file_size - num_nulls * 2);
     // the block starts with an RsvTable; this will never change
     struct RsvTable *table = (struct RsvTable *)base_ptr;
     table->num_rows = num_rows;
@@ -74,8 +80,6 @@ struct RsvTable *rsv_read_table(FILE *file)
         {
             if (fgetc(file) != RSV_EOV)
                 return NULL;
-            *data_ptr++ = 0;
-            *data_ptr++ = 0;
             *current_field++ = NULL;
             current_row->num_fields++;
             field_tmp = data_ptr;

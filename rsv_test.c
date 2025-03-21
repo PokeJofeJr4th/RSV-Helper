@@ -1,4 +1,4 @@
-#include "rsv.c"
+#include "rsv.h"
 
 int main()
 {
@@ -12,7 +12,7 @@ int main()
     rsv_finish_row(file);
     fclose(file);
 
-    file = fopen("../moku.rsv", "r");
+    file = fopen("test.rsv", "r");
     char my_buf[7];
     while (1)
     {
