@@ -2,7 +2,7 @@
 #define RSV_H_
 
 #include <stdio.h>
-#include <varargs.h>
+#include <stdarg.h>
 
 /// @brief RSV Format: End of Value character
 #define RSV_EOV (255)
