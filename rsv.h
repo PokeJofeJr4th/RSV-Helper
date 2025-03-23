@@ -1,5 +1,5 @@
-#ifndef _RSV_DEFINED
-#define _RSV_DEFINED
+#ifndef RSV_H_
+#define RSV_H_
 
 #include <stdio.h>
 #include <varargs.h>
