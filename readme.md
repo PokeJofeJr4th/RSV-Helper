@@ -1,6 +1,6 @@
 ## RSV-Helper
 
-An RSV library for C.
+An [RSV](https://github.com/Stenway/RSV-Specification) library for C.
 
 ### Usage
 
