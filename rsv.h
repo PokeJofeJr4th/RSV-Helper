@@ -2,6 +2,7 @@
 #define _RSV_DEFINED
 
 #include <stdio.h>
+#include <varargs.h>
 
 /// @brief RSV Format: End of Value character
 #define RSV_EOV (255)
@@ -19,7 +20,7 @@ struct RsvTable
     struct RsvRow *rows[];
 };
 
-/// @brief A table of RSV fields. The size of the `fields` array must be equal to `num_fields`. Each entry in the `fields` array must be either `NULL` or a pointer to a valid null-terminated UTF8 string
+/// @brief A table of RSV fields. The size of the `fields` array must be equal to `num_fields`. Each entry in the `fields` array must be either `NULL` or a pointer to a null-terminated string
 struct RsvRow
 {
     int num_fields;
@@ -46,12 +47,19 @@ int rsv_write_field(const char *field, FILE *file);
 /// @return
 int rsv_fmt_field(FILE *file, const char *fmt, ...);
 
+/// @brief variable argument version of `rsv_fmt_field`
+/// @param file a pointer to the file to write to
+/// @param fmt a valid format specifier for the field
+/// @param args the args for formatting
+/// @return
+int rsv_vfmt_field(FILE *file, const char *fmt, va_list args);
+
 /// @brief Mark the end of a row in an RSV file
 /// @param file a pointer to the file to write to
 /// @return File I/O return code
 int rsv_finish_row(FILE *file);
 
-/// @brief Read a table from a file into an RSV TAble structure
+/// @brief Read a table from a file into an RSV Table structure
 /// @param file a pointer to the file to write to
 /// @return a table of the rows and fields in the file. All rows and fields are stored in an allocation directly after the RsvTable structure
 struct RsvTable *rsv_read_table(FILE *file);
@@ -64,13 +72,13 @@ struct RsvRow *rsv_read_row(FILE *file);
 /// @brief Write an RSV Row structure to a file
 /// @param row a pointer to the row struct to write data from
 /// @param file a pointer to the file to write to
-/// @return File I/O return code
+/// @return 0 on success, EOF on error
 int rsv_write_row(struct RsvRow *row, FILE *file);
 
 /// @brief Write an RSV Table structure to a file
 /// @param table a pointer to the table struct to write data from
 /// @param file a pointer to the file to write to
-/// @return File I/O return code
+/// @return 0 on success, EOF on error
 int rsv_write_table(struct RsvTable *table, FILE *file);
 
 #endif
